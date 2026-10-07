@@ -1157,9 +1157,10 @@ body { background: var(--cream); }
 .gal__slide { position: relative; flex: none; width: 100%; aspect-ratio: 1; scroll-snap-align: center; overflow: hidden; background: var(--tile); }
 .gal__slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(var(--z, 1)); transition: transform 0.6s var(--ease); }
 .gal__slide--cut { display: grid; place-items: center; }
-.gal__slide--cut::before { content: ""; position: absolute; width: 72%; aspect-ratio: 1; border-radius: 50%; border: 1px dashed rgba(200, 154, 94, 0.55); animation: spin 60s linear infinite; }
-.gal__slide--cut::after { content: ""; position: absolute; width: 50%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255, 253, 248, 0.95), rgba(255, 253, 248, 0) 70%); }
-.gal__slide--cut img { position: relative; z-index: 1; width: auto; height: 78%; object-fit: contain; filter: drop-shadow(0 30px 30px rgba(70, 46, 18, 0.25)); transform: rotate(-8deg) translateY(var(--fy, 0)); animation: floaty 6s var(--ease-io) infinite; }
+.gal__slide--cut::before, .gal__slide--cut::after { left: 0; right: 0; top: 0; bottom: 0; margin: auto; }
+.gal__slide--cut::before { content: ""; position: absolute; width: auto; height: 80%; aspect-ratio: 1; border-radius: 50%; border: 1px dashed rgba(200, 154, 94, 0.55); animation: spin 60s linear infinite; }
+.gal__slide--cut::after { content: ""; position: absolute; width: auto; height: 56%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255, 253, 248, 0.95), rgba(255, 253, 248, 0) 70%); }
+.gal__slide--cut img { position: absolute; z-index: 1; left: 0; top: 8%; width: 100%; height: 84%; object-fit: contain; filter: drop-shadow(0 30px 30px rgba(70, 46, 18, 0.25)); transform: rotate(-8deg) translateY(var(--fy, 0)); animation: floaty 6s var(--ease-io) infinite; }
 @keyframes floaty { 50% { --fy: -10px; transform: rotate(-6deg) translateY(-10px); } }
 .gal__badge { position: absolute; z-index: 2; left: 16px; top: 16px; display: flex; gap: 6px; }
 .gal__dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
@@ -1252,7 +1253,7 @@ body { background: var(--cream); }
 .endcta p { color: rgba(255, 255, 255, 0.8); margin: 0 0 24px; }
 .endcta .two { display: grid; gap: 10px; max-width: 460px; }
 .endcta .two .btn { justify-content: center; }
-.pfoot { background: var(--ink); color: rgba(245, 232, 211, 0.72); padding: 50px 0 calc(110px + var(--safe-b)); font-size: 13.5px; }
+.pfoot { background: var(--ink); color: rgba(245, 232, 211, 0.72); padding: 50px 0 calc(40px + var(--safe-b)); font-size: 13.5px; }
 .pfoot__in { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; }
 .pfoot img { height: 24px; width: auto; }
 .pfoot nav { display: flex; gap: 20px; flex-wrap: wrap; }
@@ -1260,13 +1261,25 @@ body { background: var(--cream); }
 .pfoot nav a:hover { color: var(--sand); }
 .pfoot small { display: block; margin-top: 18px; font-size: 11.5px; opacity: 0.7; max-width: 80ch; }
 
-/* sticky buy bar: both buy buttons always one tap away */
-.pdp-bar { position: fixed; z-index: 110; left: 0; right: 0; bottom: 0; padding: 10px 12px calc(10px + var(--safe-b)); background: rgba(255, 253, 248, 0.94); backdrop-filter: blur(16px) saturate(1.3); -webkit-backdrop-filter: blur(16px) saturate(1.3); box-shadow: 0 -1px 0 var(--line), 0 -20px 40px -30px rgba(42, 33, 24, 0.4); transform: translateY(110%); transition: transform 0.6s var(--ease); }
-.pdp-bar.show { transform: none; }
-.pdp-bar__in { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-width: 760px; margin: 0 auto; }
-.pdp-bar__in .btn { justify-content: center; padding: 15px 10px; font-size: 14px; box-shadow: none; }
-.pdp-bar__meta { display: flex; justify-content: center; gap: 10px; font-size: 11px; color: var(--muted); margin: 0 0 7px; font-weight: 600; }
-.pdp-bar__meta b { color: #1b7a33; }
+/* buy box: price, options, Subscribe + Buy now side by side, Add to cart under them */
+.pbuy__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; margin: 4px 0 14px; }
+.pbuy__price .pr { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.pbuy__price .pr s { font-size: 15px; font-weight: 500; color: var(--muted); margin-right: 8px; }
+.pbuy__price .pr small { font-size: 13px; font-weight: 500; color: var(--muted); }
+.pbuy__flag { padding: 4px 10px; border-radius: 999px; background: var(--ink); color: var(--beige); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.pbuy__opts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-bottom: 14px; }
+.pbuy__opt { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.pbuy__sel { position: relative; display: inline-flex; }
+.pbuy__sel::after { content: ""; position: absolute; right: 15px; top: 50%; width: 7px; height: 7px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: translateY(-70%) rotate(45deg); pointer-events: none; }
+.pbuy__sel select { appearance: none; -webkit-appearance: none; height: 40px; padding: 0 36px 0 16px; border: 0; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1.5px rgba(42, 33, 24, 0.2); font: 700 14px var(--sans); color: var(--ink); cursor: pointer; }
+.pbuy__note { flex-basis: 100%; margin: -6px 0 0; }
+.pbuy__note:not(.warn) { display: none; }
+.pbuy__two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.pbuy__two .btn { display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 60px; padding: 10px 8px; font-size: 16px; line-height: 1.15; text-align: center; white-space: normal; }
+.pbuy__two .btn small { display: block; font-size: 11.5px; font-weight: 600; opacity: 0.82; letter-spacing: 0; }
+.pbuy__add { margin-top: 10px; min-height: 52px; gap: 10px; font-size: 15px; }
+.pbuy__add .ico { width: 19px; height: 19px; }
+.pbuy__meta { margin: 10px 2px 0; font-size: 12px; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
 
 /* reveal (no GSAP on this page: CSS + IntersectionObserver) */
 .rv { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--ease), transform 1s var(--ease); transition-delay: var(--d, 0ms); }
@@ -1286,15 +1299,30 @@ body { background: var(--cream); }
   .pnav__back span { display: none; }
   .pdp { padding-top: 0; }
   .pdp > .wrap { width: 100%; }
-  .pdp__grid { grid-template-columns: 1fr; gap: 18px; }
+  .pdp__grid { grid-template-columns: 1fr; gap: 14px; }
   .gal { position: relative; top: 0; }
   .gal__track { border-radius: 0; box-shadow: none; animation: none; }
-  .gal__slide { aspect-ratio: 1 / 0.94; }
+  .gal__slide { aspect-ratio: 1 / 0.74; }
+  .gal__badge { left: 12px; top: 12px; }
   .gal__thumbs { display: none; }
-  .gal__dots { margin-top: 10px; }
+  .gal__dots { position: absolute; z-index: 3; left: 0; right: 0; bottom: 6px; margin: 0; }
   .info { padding: 0 var(--pad); }
-  .info .crumbs2 { display: none; }
-  .info h1 { font-size: clamp(32px, 9vw, 42px); margin-top: 8px; }
+  .info .crumbs2, .info > .eyebrow { display: none; }
+  .info h1 { font-size: clamp(28px, 8vw, 36px); margin: 0 0 4px; }
+  .stars { min-height: 26px; }
+  .gal__slide--cut img { top: 15%; height: 80%; }
+  .gal__slide--cut::before { top: 10%; height: 82%; }
+  .gal__slide--cut::after { top: 10%; }
+  .ptag { height: 26px; padding: 0 10px; font-size: 9.5px; }
+  .stars { font-size: 12.5px; }
+  .pbuy__price { flex-wrap: nowrap; justify-content: space-between; margin: 4px 0 12px; }
+  .pbuy__price .pr { font-size: 22px; white-space: nowrap; }
+  .pbuy__price .pr s { font-size: 14px; margin-right: 6px; }
+  .pbuy__flag { font-size: 9.5px; letter-spacing: 0.1em; white-space: nowrap; }
+  .pbuy__opts { gap: 10px 12px; margin-bottom: 12px; justify-content: space-between; }
+  .pbuy__opt { gap: 8px; }
+  .pbuy__sel select { padding: 0 32px 0 14px; }
+  .info .lead { margin-top: 20px; }
   .bens { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--pad) * -1) 20px; padding: 0 var(--pad); }
   .bens::-webkit-scrollbar { display: none; }
   .ben { flex: none; }
@@ -1308,7 +1336,6 @@ body { background: var(--cream); }
   .endcta .two { margin: 0 auto; }
   .endcta__img { max-width: 300px; }
 }
-@media (min-width: 861px) { .pdp-bar__in { max-width: 640px; } .pdp-bar__in .btn { padding: 14px 10px; } }
 @media (prefers-reduced-motion: reduce) { .rv, .split-in .w > span { opacity: 1 !important; transform: none !important; } .gal__slide--cut img, .gal__slide--cut::before, .gal__track { animation: none !important; } }
 
 </style>
@@ -1366,15 +1393,15 @@ body { background: var(--cream); }
             <span class="eyebrow" style="--k:1">Nano-hydroxyapatite · 100 mL</span>
             <h1 style="--k:2">Miswak Mint <span class="script">Toothpaste</span></h1>
             <a class="stars" href="#reviews" style="--k:3"><span class="s"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span>4.9 · 212 reviews <span class="muted" style="font-weight:500">(sample)</span></a>
-            <p class="lead" style="--k:4">Concentrated miswak, nano-hydroxyapatite and vitamins E &amp; B12 for a polished, fresh, fluoride-free clean.</p>
-            <div class="bens" style="--k:5">
+            <div id="buybox" style="--k:4"></div>
+            <p class="lead" style="--k:5">Concentrated miswak, nano-hydroxyapatite and vitamins E &amp; B12 for a polished, fresh, fluoride-free clean.</p>
+            <div class="bens" style="--k:6">
               <span class="ben"><i class="icon-mask i-leaf" style="background:var(--green)"></i>Miswak extract</span>
               <span class="ben"><i class="icon-mask i-minerals"></i>Nano-hydroxyapatite</span>
               <span class="ben"><i class="icon-mask i-b12b"></i>Vitamins E + B12</span>
               <span class="ben"><i class="icon-mask i-fluoride"></i>Fluoride free</span>
               <span class="ben"><i class="icon-mask i-sls"></i>SLS free</span>
             </div>
-            <div id="buybox" style="--k:6"></div>
             <p class="tip" id="tip" style="--k:7"></p>
             <div class="assure" style="--k:8">
               <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span id="shipNote"></span></div>
@@ -1482,15 +1509,6 @@ body { background: var(--cream); }
       <small>© 2026 Senan Health LLC · Made in USA. These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure or prevent any disease.</small>
     </div>
   </footer>
-
-  <!-- sticky buy bar: shows whenever the buy buttons are off screen -->
-  <div class="pdp-bar" id="pdpBar" aria-label="Quick buy">
-    <p class="pdp-bar__meta"><span><span data-out="barQty"></span></span><b data-out="barSave"></b></p>
-    <div class="pdp-bar__in">
-      <button class="btn" data-buy="sub"><span class="lbl-swap" data-out="subShort"></span><span class="ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>On its way</span></button>
-      <button class="btn btn--sand" data-buy="once"><span class="lbl-swap" data-out="onceShort"></span><span class="ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>On its way</span></button>
-    </div>
-  </div>
 
   <div class="scrim" id="scrim"></div>
   <aside class="drawer" id="drawer" aria-label="Your bag" aria-hidden="true" role="dialog" aria-modal="true">
@@ -3357,11 +3375,31 @@ W.SenanApp = {init, route, rerender};
   $('#announce').innerHTML = (th != null ? 'Free US delivery over <b>' + K.fmt$s(th) + '</b>' : 'Delivered across the US') + '<span class="hide-sm"> · <b>Subscribe &amp; save ' + off + '</b> on every tube</span>';
   $('#shipNote').textContent = th != null ? 'Free delivery over ' + K.fmt$s(th) : 'US delivery';
   if (CF.TUBE_LASTS_DAYS) $('#tip').innerHTML = '<i class="icon-mask i-leaf" style="background:var(--green)"></i>Tip: one tube lasts most people about ' + CF.TUBE_LASTS_DAYS + ' days.';
-  U.out('barQty', function (c) { return K.tubesTxt(U.SEL.qty) + (c.qs.free ? ' · free delivery' : ''); });
-  U.out('barSave', function (c) { return 'Subscribe saves ' + K.fmt$(c.qs.save); });
+  U.out('pSub', function (c) { return 'Subscribe<small>' + K.fmt$(c.qs.total) + ' · save ' + K.fmt$(c.qs.save) + '</small>'; });
+  U.out('pOnce', function (c) { return 'Buy now<small>' + K.fmt$(c.qo.total) + ' one time</small>'; });
+  U.out('pMeta', function (c) { return K.tubesTxt(U.SEL.qty) + ' · ' + (c.qo.free ? 'Free delivery' : 'Delivery ' + K.fmt$(c.qo.delivery)) + ' · Ships ' + K.D.short(c.first); });
 
-  /* ---------- buy box ---------- */
-  $('#buybox').innerHTML = U.buyCardsHTML({ id: 'pdp' });
+  /* ---------- buy box: one image, two buy buttons side by side, add to cart under them ---------- */
+  var ivs = CF.INTERVAL_SHORTCUTS.slice();
+  if (ivs.indexOf(U.SEL.interval) < 0) ivs.push(U.SEL.interval);
+  ivs.sort(function (a, b) { return a - b; });
+  var okHTML = '<span class="ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>On its way</span>';
+  $('#buybox').innerHTML =
+    '<p class="pbuy__price"><span class="pr" data-out="subUnit"></span><span class="pbuy__flag">Subscribe · save ' + off + '</span></p>' +
+    '<div class="pbuy__opts">' +
+      '<div class="pbuy__opt"><span>Tubes</span>' + U.stepperHTML('sel.qty', 'Tubes per delivery', 'sm') + '</div>' +
+      '<label class="pbuy__opt"><span>Every</span><span class="pbuy__sel"><select id="pInterval" aria-label="Days between subscription deliveries">' +
+        ivs.map(function (n) { return '<option value="' + n + '"' + (n === U.SEL.interval ? ' selected' : '') + '>' + n + ' days</option>'; }).join('') +
+      '</select></span></label>' +
+      '<p class="st-note pbuy__note"></p>' +
+    '</div>' +
+    '<div class="pbuy__two">' +
+      '<button class="btn" data-buy="sub"><span class="lbl-swap" data-out="pSub"></span>' + okHTML + '</button>' +
+      '<button class="btn btn--sand" data-buy="once"><span class="lbl-swap" data-out="pOnce"></span>' + okHTML + '</button>' +
+    '</div>' +
+    '<button class="btn btn--ghost btn--block pbuy__add" data-add="once">' + K.ico('bag') + '<span>Add to cart</span></button>' +
+    '<p class="pbuy__meta" data-out="pMeta"></p>';
+  $('#pInterval').addEventListener('change', function (e) { U.setSel({ interval: +e.target.value }); });
 
   /* ---------- gallery: swipe on phones, thumbs on desktop ---------- */
   var track = $('#galTrack'), slides = $$('.gal__slide', track), dots = $('#galDots'), thumbs = $('#galThumbs'), cur = 0;
@@ -3380,12 +3418,6 @@ W.SenanApp = {init, route, rerender};
     addEventListener('pointermove', function (e) { if (dn) track.scrollLeft = sl - (e.clientX - sx); });
     addEventListener('pointerup', function () { if (!dn) return; dn = false; track.style.scrollSnapType = ''; track.style.cursor = ''; goTo(Math.round(track.scrollLeft / track.clientWidth)); });
   }
-
-  /* ---------- sticky buy bar: visible whenever the buy cards are off screen ---------- */
-  var bar = $('#pdpBar'), cardsVisible = true, footVisible = false;
-  function syncBar() { bar.classList.toggle('show', !cardsVisible && !footVisible && !document.body.classList.contains('in-app')); }
-  new IntersectionObserver(function (en) { cardsVisible = en[0].isIntersecting; syncBar(); }, { threshold: 0.25 }).observe($('#buybox .buycards'));
-  new IntersectionObserver(function (en) { footVisible = en[0].isIntersecting; syncBar(); }, { threshold: 0.1 }).observe($('.pfoot'));
 
   /* ---------- reveals (CSS + IntersectionObserver) ---------- */
   $$('.split-in').forEach(function (el) {
@@ -3436,10 +3468,7 @@ W.SenanApp = {init, route, rerender};
   })();
 
   /* ---------- commerce + account area ---------- */
-  window.SenanApp.init({
-    onStore: function () { syncBar(); },
-    onApp: function () { syncBar(); }
-  });
+  window.SenanApp.init({});
   var rs = q.get('restart') && K.subById(K.S.DB, q.get('restart'));
   if (rs) { var n = $('#restartNote'); n.hidden = false; n.innerHTML = '<div class="banner info"><span class="t">' + K.ico('info') + "Restarting '" + K.esc(rs.name) + "' with its previous settings. Check them, then subscribe.</span></div>"; }
   requestAnimationFrame(function () { document.documentElement.classList.add('is-ready'); });
